@@ -12,12 +12,12 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
-const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) returning * \
-on conflict (slug) do update set guild_id = $2, power = $4, character_power = $5, ship_power = $6 where slug = $3; \
-";
+const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) \
+ on conflict (slug) do update set guild_id = $2, power = $4, character_power = $5, ship_power = $6 where slug = $3; \
+ ";
 const upsertCharQ = "insert into characters (name, member_id, level, rarity, gear_level) values ($1, $2, $3, $4, $5) \
-on conflict (name, member_id) do update set level = $3, rarity = $4, gear_level = $5 where name = $1 and member_id = $2; \
-";
+ on conflict (name, member_id) do update set level = $3, rarity = $4, gear_level = $5 where name = $1 and member_id = $2; \
+ ";
 
 const guildID = process.argv[2];
 pool.query('select url from guilds where id = $1', [guildID])
