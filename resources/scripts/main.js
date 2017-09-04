@@ -33,7 +33,7 @@ pool.query('select url from guilds where id = $1', [guildID])
                                 pool.query('select id from members where slug = $1', [member.slug]).then(res => {
                                     pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
                                         .then(res => console.info('Processed ' + member.name + ': ' + character.name))
-                                        .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, e));
+                                        .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
                                 })
                             });
                         })
