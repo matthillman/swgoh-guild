@@ -23,24 +23,24 @@ const guildID = process.argv[2];
 pool.query('select url from guilds where id = $1', [guildID])
     .then(res => {
         const url = res.rows[0].url;
-        // getGuild(url);
-        parseMembers(['u/matthillman/'])
-            .then(list => {
-                list.forEach(member => {
-                    pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
-                        .then(res => {
-                            member.characters.forEach(character => {
-                                pool.query('select id from members where slug = $1', [member.slug]).then(res => {
-                                    pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
-                                        .then(res => console.info('Processed ' + member.name + ': ' + character.name))
-                                        .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
-                                })
-                            });
-                        })
-                        .catch(err => console.error('Error processing member ' + member.slug, err));
-                })
-            })
-            .catch(error => console.error(error));
+        getGuild(url);
+        // parseMembers(['u/matthillman/'])
+        //     .then(list => {
+        //         list.forEach(member => {
+        //             pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
+        //                 .then(res => {
+        //                     member.characters.forEach(character => {
+        //                         pool.query('select id from members where slug = $1', [member.slug]).then(res => {
+        //                             pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
+        //                                 .then(res => console.info('Processed ' + member.name + ': ' + character.name))
+        //                                 .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
+        //                         })
+        //                     });
+        //                 })
+        //                 .catch(err => console.error('Error processing member ' + member.slug, err));
+        //         })
+        //     })
+        //     .catch(error => console.error(error));
     })
     .catch(e => console.error(e.stack));
 
