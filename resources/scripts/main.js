@@ -72,9 +72,9 @@ function parseMembers(links) {
                 let $user = $(memberMain).find('.panel-profile').last();
                 let name = $user.find('.panel-title .char-name').first().text();
                 let $info = $user.find('.panel-body > p > .pull-right');
-                let power = +($info[0].text().replace(/,/g, ''));
-                let charPower = +($info[1].text().replace(/,/g, ''));
-                let shipPower = +($info[2].text().replace(/,/g, ''));
+                let power = +($info.eq(0).text().replace(/,/g, ''));
+                let charPower = +($info.eq(1).text().replace(/,/g, ''));
+                let shipPower = +($info.eq(2).text().replace(/,/g, ''));
                 let chars = $(memberMain).find('.player-char-portrait').map((index, char) => {
                     let $char = $(char);
                     return {
