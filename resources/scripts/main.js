@@ -59,9 +59,23 @@ function getGuild(url) {
 	    var memberLinks = $members('.character-list table tbody tr td:first-of-type > a').map((index, member) => {
 	        return member.attribs.href;
 	    });
-	    parseMembers(memberLinks.toArray()).then(function(list) {
-	        list.forEach(member => console.log(member.name, member.characters.length));
-	    });
+        parseMembers(memberLinks.toArray())
+        .then(list => {
+            list.forEach(member => {
+                pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
+                    .then(res => {
+                        member.characters.forEach(character => {
+                            pool.query('select id from members where slug = $1', [member.slug]).then(res => {
+                                pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
+                                    .then(res => console.info('Processed ' + member.name + ': ' + character.name))
+                                    .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
+                            })
+                        });
+                    })
+                    .catch(err => console.error('Error processing member ' + member.slug, err));
+            })
+        })
+        .catch(error => console.error(error));
 	});
 }
 
