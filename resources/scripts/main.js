@@ -16,7 +16,7 @@ const upsertUserQ = "insert into members (name, guild_id, slug, power, character
  on conflict (slug) do update set guild_id = $2, power = $4, character_power = $5, ship_power = $6 where members.slug = $3; \
  ";
 const upsertCharQ = "insert into characters (name, member_id, level, rarity, gear_level) values ($1, $2, $3, $4, $5) \
- on conflict (name, member_id) do update set level = $3, rarity = $4, gear_level = $5 where name = $1 and member_id = $2; \
+ on conflict (characters.name, member_id) do update set level = $3, rarity = $4, gear_level = $5 where characters.name = $1 and member_id = $2; \
  ";
 
 const guildID = process.argv[2];
