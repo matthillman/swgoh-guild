@@ -7,7 +7,7 @@ let url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
 let memberBase = "https://swgoh.gg/";
 let memberTag = "collection/";
 
-console.log(‘database’, process.env.DATABASE_URL)
+console.log('database', process.env.DATABASE_URL)
 
 // getGuild(url);
 
