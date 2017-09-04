@@ -21,6 +21,8 @@ class Character extends Migration
             $table->integer('rarity');
             $table->integer('gear_level');
             $table->timestamps();
+
+            $table->unique(['name', 'member_id']);
         });
     }
 
