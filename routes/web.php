@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('guild', \App\Http\Controllers\GuildController::class);
+Route::resource('guild', '\App\Http\Controllers\GuildController');
