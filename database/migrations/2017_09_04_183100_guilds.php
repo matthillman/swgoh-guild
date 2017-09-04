@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Character extends Migration
+class Guilds extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class Character extends Migration
      */
     public function up()
     {
-        Schema::create('characters', function (Blueprint $table) {
+        Schema::create('guilds', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('member_id');
             $table->string('name');
-            $table->integer('level');
-            $table->integer('rarity');
-            $table->integer('gear_level');
+            $table->string('url')->unique();
+            $table->integer('webhook')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class Character extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('characters');
+        Schema::dropIfExists('guilds');
     }
 }

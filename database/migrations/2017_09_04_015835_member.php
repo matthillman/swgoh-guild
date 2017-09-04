@@ -17,6 +17,7 @@ class Member extends Migration
             $table->increments('id');
             $table->unsignedInteger('guild_id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('power');
             $table->string('character_power');
             $table->string('ship_power');
@@ -31,6 +32,6 @@ class Member extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('members');
     }
 }

@@ -1,23 +1,26 @@
 'use strict';
 
-var request = require('request');
-var cheerio = require('cheerio');
+const request = require('request');
+const $ = require('cheerio');
 
 const { Pool, Client } = require('pg');
 
-let url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
-let memberBase = "https://swgoh.gg/";
-let memberTag = "collection/";
+const memberBase = "https://swgoh.gg/";
+const memberTag = "collection/";
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-})
+    connectionString: process.env.DATABASE_URL,
+});
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) \
+on conflict (slug) do update set guild_id = $2, power = $4, character_power = $5, ship_power = $6 where slug = $3; \
+";
 
+pool.query('select url from guilds where id = $1', (process.argv[2] || 1))
+    .then(res => console.warn(res))
+    .catch(e => console.error(e.stack));
+
+// const url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
 // getGuild(url);
 
 // parseMembers(['u/matthillman/']).then(list => console.log(list)).catch(error => console.error(error));
@@ -29,9 +32,9 @@ function getGuild(url) {
 	        return;
 	    }
 	
-	    let $ = cheerio.load(html);
+	    let $members = $.load(html);
 	
-	    var memberLinks = $('.character-list table tbody tr td:first-of-type > a').map((index, member) => {
+	    var memberLinks = $members('.character-list table tbody tr td:first-of-type > a').map((index, member) => {
 	        return member.attribs.href;
 	    });
 	    parseMembers(memberLinks.toArray()).then(function(list) {
@@ -45,9 +48,9 @@ function parseMembers(links) {
         let members = [];
         links.forEach((href) => {
             getMember(href).then(memberMain => {
-                let name = cheerio(memberMain).find('.panel-profile').last().find('.panel-title .char-name').first().text();
-                let chars = cheerio(memberMain).find('.player-char-portrait').map((index, char) => {
-                    let $char = cheerio(char);
+                let name = $(memberMain).find('.panel-profile').last().find('.panel-title .char-name').first().text();
+                let chars = $(memberMain).find('.player-char-portrait').map((index, char) => {
+                    let $char = $(char);
                     return {
                         name: $char.find('img').first().attr('alt'),
                         level: $char.find('.char-portrait-full-level').text(),

@@ -10,6 +10,9 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "scrape": "resources/scripts/main.js"
     },
+    "engines": {
+        "node": "8.4.0"
+    },
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
         "pg": "^7.3.0",
