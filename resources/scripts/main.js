@@ -82,7 +82,7 @@ function parseMembers(links) {
                         gear: fromRoman($char.find('.char-portrait-full-gear-level').text()),
                         stars: 7 - $char.find('star-inactive').length,
                     };
-                });
+                }).toArray();
                 members.push({ name: name, slug: href, power: power, characterPower: charPower, shipPower: shipPower, characters: chars});
                 
                 if (links.length == members.length) {
