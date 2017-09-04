@@ -46,7 +46,7 @@ class GuildController extends Controller
      */
     public function show($id)
     {
-        return view('guild.members', [$guild => Guid::with('characters.member')->find($id)])
+        return view('guild.members', [$guild => Guid::with('characters.member')->find($id)]);
     }
 
     /**
