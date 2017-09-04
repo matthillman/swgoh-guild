@@ -3,11 +3,20 @@
 var request = require('request');
 var cheerio = require('cheerio');
 
+const { Pool, Client } = require('pg');
+
 let url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
 let memberBase = "https://swgoh.gg/";
 let memberTag = "collection/";
 
-console.log('database', process.env.DATABASE_URL)
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+})
+
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  pool.end()
+})
 
 // getGuild(url);
 
