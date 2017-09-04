@@ -7,9 +7,11 @@ let url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
 let memberBase = "https://swgoh.gg/";
 let memberTag = "collection/";
 
+console.log(process.env.DATABASE_URL)
+
 // getGuild(url);
 
-parseMembers(['u/matthillman/']).then(list => console.log(list)).catch(error => console.error(error));
+// parseMembers(['u/matthillman/']).then(list => console.log(list)).catch(error => console.error(error));
 
 function getGuild(url) {
 	request(url, (error, response, html) => {
