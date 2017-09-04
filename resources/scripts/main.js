@@ -16,7 +16,7 @@ const upsertUserQ = "insert into members (name, guild_id, slug, power, character
 on conflict (slug) do update set guild_id = $2, power = $4, character_power = $5, ship_power = $6 where slug = $3; \
 ";
 
-pool.query('select url from guilds where id = $1', (process.argv[2] || 1))
+pool.query('select url from guilds where id = $1', [process.argv[2]])
     .then(res => console.warn(res))
     .catch(e => console.error(e.stack));
 
