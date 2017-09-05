@@ -19,7 +19,7 @@
 				</tr>
     		</thead>
     		<tbody>
-    			@foreach ($guild->characters as $character)
+    			@foreach ($guild->characters->sortBy('name') as $character)
     			<tr>
     				<td>{{ $character->name }}</td>
     				<td>{{ $character->member->name }}</td>
