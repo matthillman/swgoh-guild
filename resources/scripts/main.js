@@ -9,7 +9,7 @@ const memberBase = "https://swgoh.gg/";
 const memberTag = "collection/";
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: 'postgres://swgoh:swgoh@127.0.0.1:5432/swgoh',
 });
 
 const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) \
@@ -24,23 +24,23 @@ pool.query('select url from guilds where id = $1', [guildID])
     .then(res => {
         const url = res.rows[0].url;
         getGuild(url);
-        // parseMembers(['u/matthillman/'])
-        //     .then(list => {
-        //         list.forEach(member => {
-        //             pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
-        //                 .then(res => {
-        //                     member.characters.forEach(character => {
-        //                         pool.query('select id from members where slug = $1', [member.slug]).then(res => {
-        //                             pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
-        //                                 .then(res => console.info('Processed ' + member.name + ': ' + character.name))
-        //                                 .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
-        //                         })
-        //                     });
-        //                 })
-        //                 .catch(err => console.error('Error processing member ' + member.slug, err));
-        //         })
-        //     })
-        //     .catch(error => console.error(error));
+/*         parseMembers(['u/matthillman/'])
+             .then(list => {
+                 list.forEach(member => {
+                     pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
+                         .then(res => {
+                             member.characters.forEach(character => {
+                                 pool.query('select id from members where slug = $1', [member.slug]).then(res => {
+                                     pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
+                                         .then(res => console.info('Processed ' + member.name + ': ' + character.name))
+                                         .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
+                                 })
+                             });
+                         })
+                         .catch(err => console.error('Error processing member ' + member.slug, err));
+                 })
+             })
+             .catch(error => console.error(error)); */
     })
     .catch(e => console.error(e.stack));
 
@@ -96,7 +96,7 @@ function parseMembers(links) {
                         name: $char.find('img').first().attr('alt'),
                         level: +($char.find('.char-portrait-full-level').text()),
                         gear: fromRoman($char.find('.char-portrait-full-gear-level').text()),
-                        stars: 7 - $char.find('star-inactive').length,
+                        stars: 7 - $char.find('.star-inactive').length,
                     };
                 }).toArray();
                 members.push({ name: name, slug: href, power: power, characterPower: charPower, shipPower: shipPower, characters: chars});
