@@ -86,7 +86,7 @@
     </div>
     <!-- JavaScripts -->
      <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-     <script src="{{ mix('js/main.js') }}"></script>
+     <script src="{{ mix('js/app.js') }}"></script>
 	 @stack('scripts')
 </body>
 </html>
