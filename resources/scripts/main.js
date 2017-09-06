@@ -9,7 +9,7 @@ const memberBase = "https://swgoh.gg/";
 const memberTag = "collection/";
 
 const pool = new Pool({
-    connectionString: 'postgres://swgoh:swgoh@127.0.0.1:5432/swgoh',
+    connectionString: 'postgres://swgoh:swgoh@iera.hillman.me:5432/swgoh',
 });
 
 const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) \
@@ -44,9 +44,6 @@ pool.query('select url from guilds where id = $1', [guildID])
     })
     .catch(e => console.error(e.stack));
 
-// const url = "https://swgoh.gg/g/11339/the-phantom-schwartz/";
-
-
 function getGuild(url) {
 	request(url, (error, response, html) => {
 	    if (error) {
@@ -59,23 +56,29 @@ function getGuild(url) {
 	    var memberLinks = $members('.character-list table tbody tr td:first-of-type > a').map((index, member) => {
 	        return member.attribs.href;
 	    });
+        let memberIDList = [];
         parseMembers(memberLinks.toArray())
-        .then(list => {
-            list.forEach(member => {
-                pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
-                    .then(res => {
-                        member.characters.forEach(character => {
-                            pool.query('select id from members where slug = $1', [member.slug]).then(res => {
-                                pool.query(upsertCharQ, [character.name, res.rows[0].id, character.level, character.stars, character.gear])
-                                    .then(res => console.info('Processed ' + member.name + ': ' + character.name))
-                                    .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
-                            })
-                        });
-                    })
-                    .catch(err => console.error('Error processing member ' + member.slug, err));
+            .then(list => {
+                list.forEach(member => {
+                    pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
+                        .then(res => {
+                            member.characters.forEach(character => {
+                                pool.query('select id from members where slug = $1', [member.slug]).then(res => {
+                                    let memberID = res.rows[0].id;
+                                    pool.query(upsertCharQ, [character.name, memberID, character.level, character.stars, character.gear])
+                                        .then(res => console.info('Processed ' + member.name + ': ' + character.name))
+                                        .catch(err => console.error('Error processing ' + member.name + ': ' + character.name, err));
+                                    memberIDList.push(memberID);
+                                })
+                            });
+                        })
+                        .catch(err => console.error('Error processing member ' + member.slug, err));
+                });
             })
-        })
-        .catch(error => console.error(error));
+            .catch(error => console.error(error));
+        pool.query('delete from members where guild_id = $1 and slug not in ($2)', [guildID, memberLinks.toArray()])
+            .then(res => console.info(res))
+            .catch(err => console.error('Error deleting members', e.stack));
 	});
 }
 
@@ -123,16 +126,16 @@ function getMember(href) {
     });
 }
 
-function fromRoman(str) {  
+function fromRoman(str) {
     var result = 0;
     // the result is now a number, not a string
     var decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-    var roman = ["M", "CM","D","CD","C", "XC", "L", "XL", "X","IX","V","IV","I"];
-    for (var i = 0;i<=decimal.length;i++) {
-      while (str.indexOf(roman[i]) === 0){
-        result += decimal[i];
-        str = str.replace(roman[i],'');
-      }
+    var roman = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+    for (var i = 0; i <= decimal.length; i++) {
+        while (str.indexOf(roman[i]) === 0) {
+            result += decimal[i];
+            str = str.replace(roman[i], '');
+        }
     }
     return result;
-  }
+}

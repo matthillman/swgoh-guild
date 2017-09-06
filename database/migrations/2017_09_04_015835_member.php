@@ -22,6 +22,10 @@ class Member extends Migration
             $table->string('character_power');
             $table->string('ship_power');
             $table->timestamps();
+
+            $table->foreign('guild_id')
+                ->references('id')->on('guilds')
+                ->onDelete('cascade');
         });
     }
 

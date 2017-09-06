@@ -23,6 +23,10 @@ class Character extends Migration
             $table->timestamps();
 
             $table->unique(['name', 'member_id']);
+
+            $table->foreign('member_id')
+                ->references('id')->on('members')
+                ->onDelete('cascade');
         });
     }
 
