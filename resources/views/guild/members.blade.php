@@ -2,8 +2,6 @@
 
 @section('content')
 
-<div id="app">@{{message}}</div>
-<example></example>
 
 <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
     <div class="mdl-card__title">
@@ -11,6 +9,8 @@
     </div>
 
     <div class="mdl-card__supporting-text flex-vertical-centered wide">
+<div id="app">@{{message}}</div>
+<example></example>
 		<table>
 			<thead>
 				<tr>
