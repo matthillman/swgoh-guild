@@ -44,9 +44,13 @@ class GuildController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Guild $guild)
     {
-        return view('guild.members', ['guild' => Guild::with('characters.member')->find($id)]);
+        return view('guild.members', ['guild' => $guild]);
+    }
+
+    public function members(Guild $guild) {
+        return $guild->with('members')->toJson();
     }
 
     /**

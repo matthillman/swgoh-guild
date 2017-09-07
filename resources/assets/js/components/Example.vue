@@ -16,8 +16,10 @@
 
 <script>
     export default {
+        props: ['guild'],
         mounted() {
-            console.log('Component mounted.')
+            this.$http.get('/members')
+                .then(res => console.warn(res));
         }
     }
 </script>
