@@ -2,7 +2,7 @@
     <table>
         <thead>
             <tr>
-                <th v-for="column in columns">{{ column.label }}</th>
+                <th v-for="column in columns" v-on:click="sortBy(column.label)">{{ column.label }}</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,14 @@
                     v = v[props[i]];
                 }
                 return v;
+            },
+            sortBy: function(prop) {
+                this.items = this.items.sort(function(a, b) {
+                    if (typeof a === typeof "") {
+                        return a.localeCompare(b);
+                    }
+                    return a - b;
+                })
             }
         }
     }
