@@ -2,7 +2,11 @@
     <table>
         <thead>
             <tr>
-                <th v-for="column in columns" v-on:click="sortBy(column.prop)">{{ column.label }}</th>
+                <th v-for="column in columns" 
+                    v-on:click="sortBy(column.prop)"
+                    class="clickable"
+                    v-bind:class="{sorted: sorted === column.prop"
+                >{{ column.label }}</th>
             </tr>
         </thead>
         <tbody>
@@ -63,3 +67,13 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .clickable {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+</style>
