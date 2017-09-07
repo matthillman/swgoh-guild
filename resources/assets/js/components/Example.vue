@@ -23,8 +23,10 @@
             this.$http.get(this.route)
                 .then(res => this.items = res.data);
         },
-        data: {
-            items: []
+        data: function () {
+            return {
+                items: []
+            }
         },
         methods: {
             resolve: function(item, prop) {
