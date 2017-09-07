@@ -1,25 +1,41 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
-
-                    <div class="panel-body">
-                        I'm an example component!
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th v-for="column in columns">{{ column.label }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td v-for="column in columns">{{ resolve(item, column.prop) }}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
     export default {
-        props: ['guild'],
+        props: {
+            route: String,
+            columns: Array,
+        },
         mounted() {
-            this.$http.get('members')
-                .then(res => console.warn(res));
+            this.$http.get(this.route)
+                .then(res => this.items = res.data);
+        },
+        data: {
+            items: []
+        },
+        methods: {
+            resolve: function(item, prop) {
+                let v = item;
+                let props = prop.split('.');
+                for (let i = 0; i < props.length; i++) {
+                    if (!v) return undefined;
+                    v = v[props[i]];
+                }
+                return v;
+            }
         }
     }
 </script>

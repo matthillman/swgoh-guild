@@ -9,11 +9,12 @@
     </div>
 
     <div class="mdl-card__supporting-text flex-vertical-centered wide">
-<div id="app">
-	@{{message}}
-	<example></example>
-</div>
-
+		<div id="app">
+			<example
+				route="members"
+				v-bind:columns="memberColumns"
+			></example>
+		</div>
 		<table>
 			<thead>
 				<tr>
