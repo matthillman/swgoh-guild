@@ -9,7 +9,7 @@ const memberBase = "https://swgoh.gg/";
 const memberTag = "collection/";
 
 const pool = new Pool({
-    connectionString: 'postgres://swgoh:swgoh@iera.hillman.me:5432/swgoh',
+    connectionString: 'postgres://swgoh:swgoh@127.0.0.1:5432/swgoh',
 });
 
 const upsertUserQ = "insert into members (name, guild_id, slug, power, character_power, ship_power) values ($1, $2, $3, $4, $5, $6) \
