@@ -18,7 +18,7 @@
     export default {
         props: ['guild'],
         mounted() {
-            this.$http.get('/members')
+            this.$http.get('members')
                 .then(res => console.warn(res));
         }
     }

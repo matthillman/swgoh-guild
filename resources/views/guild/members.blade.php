@@ -9,8 +9,11 @@
     </div>
 
     <div class="mdl-card__supporting-text flex-vertical-centered wide">
-<div id="app">@{{message}}</div>
-<example></example>
+<div id="app">
+	@{{message}}
+	<example></example>
+</div>
+
 		<table>
 			<thead>
 				<tr>

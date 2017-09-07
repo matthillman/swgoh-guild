@@ -50,7 +50,11 @@ class GuildController extends Controller
     }
 
     public function members(Guild $guild) {
-        return $guild->with('members')->toJson();
+        return response()->json($guild->with('members')->get());
+    }
+	
+    public function characters(Guild $guild) {
+        return response()->json($guild->with('characters.members')->get());
     }
 
     /**
