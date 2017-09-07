@@ -12103,6 +12103,8 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 //
 //
 //
@@ -12128,13 +12130,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         this.$http.get(this.route).then(function (res) {
-            return _this.items = res.data;
+            _this.items = res.data;
+            _this.sortBy(_this.columns.first.prop);
         });
     },
 
     data: function data() {
         return {
-            items: []
+            items: [],
+            sorted: ''
         };
     },
     methods: {
@@ -12146,6 +12150,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 v = v[props[i]];
             }
             return v;
+        },
+        sortBy: function sortBy(prop) {
+            console.warn('sort by', prop);
+            var vm = this;
+            this.items = this.items.sort(function (a, b) {
+                var aProp = vm.resolve(a, prop);
+                var bProp = vm.resolve(b, prop);
+                if ((typeof aProp === 'undefined' ? 'undefined' : _typeof(aProp)) === _typeof("")) {
+                    return aProp.localeCompare(bProp);
+                }
+                return aProp - bProp;
+            });
+
+            if (this.sorted === prop) {
+                this.items = this.items.reverse();
+                this.sorted = '';
+            } else {
+                this.sorted = prop;
+            }
         }
     }
 });
@@ -12156,7 +12179,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('table', [_c('thead', [_c('tr', _vm._l((_vm.columns), function(column) {
-    return _c('th', [_vm._v(_vm._s(column.label))])
+    return _c('th', {
+      on: {
+        "click": function($event) {
+          _vm.sortBy(column.prop)
+        }
+      }
+    }, [_vm._v(_vm._s(column.label))])
   }))]), _vm._v(" "), _c('tbody', _vm._l((_vm.items), function(item) {
     return _c('tr', _vm._l((_vm.columns), function(column) {
       return _c('td', [_vm._v(_vm._s(_vm.resolve(item, column.prop)))])

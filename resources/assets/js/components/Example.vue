@@ -2,7 +2,7 @@
     <table>
         <thead>
             <tr>
-                <th v-for="column in columns" v-on:click="sortBy(column.label)">{{ column.label }}</th>
+                <th v-for="column in columns" v-on:click="sortBy(column.prop)">{{ column.label }}</th>
             </tr>
         </thead>
         <tbody>
@@ -21,11 +21,15 @@
         },
         mounted() {
             this.$http.get(this.route)
-                .then(res => this.items = res.data);
+                .then(res => {
+					this.items = res.data;
+					this.sortBy(this.columns.first.prop);
+				});
         },
         data: function () {
             return {
-                items: []
+                items: [],
+				sorted: ''
             }
         },
         methods: {
@@ -39,12 +43,22 @@
                 return v;
             },
             sortBy: function(prop) {
+				let vm = this;
                 this.items = this.items.sort(function(a, b) {
-                    if (typeof a === typeof "") {
-                        return a.localeCompare(b);
+					let aProp = vm.resolve(a, prop);
+					let bProp = vm.resolve(b, prop);
+                    if (typeof aProp === typeof "") {
+                        return aProp.localeCompare(bProp);
                     }
-                    return a - b;
-                })
+                    return aProp - bProp;
+                });
+				
+				if (this.sorted === prop) {
+					this.items = this.items.reverse();
+					this.sorted = '';
+				} else {
+					this.sorted = prop;
+				}
             }
         }
     }
