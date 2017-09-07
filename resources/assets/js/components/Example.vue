@@ -26,8 +26,8 @@
         mounted() {
             this.$http.get(this.route)
                 .then(res => {
-					this.items = res.data;
-					this.sortBy(this.columns.first.prop);
+                    this.items = res.data;
+                    this.sortBy(this.columns[0].prop);
 				});
         },
         data: function () {
