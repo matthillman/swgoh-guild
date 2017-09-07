@@ -5,7 +5,7 @@
                 <th v-for="column in columns" 
                     v-on:click="sortBy(column.prop)"
                     class="clickable"
-                    v-bind:class="{sorted: sorted === column.prop"
+                    v-bind:class="{sorted: sorted === column.prop}"
                 >{{ column.label }}</th>
             </tr>
         </thead>
