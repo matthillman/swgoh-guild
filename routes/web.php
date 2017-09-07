@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::resource('guild', '\App\Http\Controllers\GuildController');
 Route::get('guild/{id}/members', '\App\Http\Controllers\GuildController@members');
+Route::get('guild/{id}/characters', '\App\Http\Controllers\GuildController@characters');

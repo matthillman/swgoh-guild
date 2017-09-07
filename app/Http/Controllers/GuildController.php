@@ -44,17 +44,17 @@ class GuildController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Guild $guild)
+    public function show($id)
     {
-        return view('guild.members', ['guild' => $guild]);
+        return view('guild.members', ['guild' => Guild::find($id)]);
     }
 
-    public function members(Guild $guild) {
-        return response()->json($guild->with('members')->get());
+    public function members($id) {
+        return response()->json(Guild::find($id)->members->toArray());
     }
 	
-    public function characters(Guild $guild) {
-        return response()->json($guild->with('characters.members')->get());
+    public function characters($id) {
+        return response()->json(Guild::find($id)->characters()->with('member')->get()->toArray());
     }
 
     /**

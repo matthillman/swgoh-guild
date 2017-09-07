@@ -8,13 +8,11 @@
         <h2 class="mdl-card__title-text fill center">Guild Characters</h2>
     </div>
 
-    <div class="mdl-card__supporting-text flex-vertical-centered wide">
-		<div id="app">
-			<example
-				route="members"
-				v-bind:columns="memberColumns"
-			></example>
-		</div>
+    <div class="mdl-card__supporting-text flex-vertical-centered wide" id="app">
+		<example
+			route="characters"
+			v-bind:columns="memberColumns"
+		></example>
 	</div>
 </div>
 @endsection

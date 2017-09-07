@@ -770,7 +770,7 @@ Vue.component('example', __webpack_require__(31));
 var app = new Vue({
     el: '#app',
     data: {
-        message: "Hi"
+        memberColumns: [{ prop: 'name', label: 'Character' }, { prop: 'member.name', label: 'Member' }, { prop: 'rarity', label: 'Rarity' }, { prop: 'level', label: 'Level' }, { prop: 'gear_level', label: 'Gear' }]
     }
 });
 
@@ -12118,14 +12118,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['guild'],
+    props: {
+        route: String,
+        columns: Array
+    },
     mounted: function mounted() {
-        this.$http.get('members').then(function (res) {
-            return console.warn(res);
+        var _this = this;
+
+        this.$http.get(this.route).then(function (res) {
+            return _this.items = res.data;
         });
+    },
+
+    data: function data() {
+        return {
+            items: []
+        };
+    },
+    methods: {
+        resolve: function resolve(item, prop) {
+            var v = item;
+            var props = prop.split('.');
+            for (var i = 0; i < props.length; i++) {
+                if (!v) return undefined;
+                v = v[props[i]];
+            }
+            return v;
+        }
     }
 });
 
@@ -12134,22 +12155,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
-}]}
+  return _c('table', [_c('thead', [_c('tr', _vm._l((_vm.columns), function(column) {
+    return _c('th', [_vm._v(_vm._s(column.label))])
+  }))]), _vm._v(" "), _c('tbody', _vm._l((_vm.items), function(item) {
+    return _c('tr', _vm._l((_vm.columns), function(column) {
+      return _c('td', [_vm._v(_vm._s(_vm.resolve(item, column.prop)))])
+    }))
+  }))])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
