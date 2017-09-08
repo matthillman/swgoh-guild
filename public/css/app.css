@@ -666,13 +666,15 @@ label.fake {
   border-top: 1px ridge #253746;
 }
 
-.mdl-card__title-text.fill {
+.mdl-card__title-text.fill,
+.mdl-card__subtitle-text.fill {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.mdl-card__title-text.center {
+.mdl-card__title-text.center,
+.mdl-card__subtitle-text.center {
   -ms-flex-item-align: center;
       align-self: center;
   text-align: center;

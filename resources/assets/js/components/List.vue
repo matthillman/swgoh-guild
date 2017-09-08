@@ -1,20 +1,24 @@
 <template>
-    <table>
-        <thead>
-            <tr>
-                <th v-for="column in columns" 
-                    v-on:click="sortBy(column.prop)"
-                    class="clickable"
-                    v-bind:class="{sorted: sorted === column.prop}"
-                >{{ column.label }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in items">
-                <td v-for="column in columns">{{ resolve(item, column.prop) }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<div class="flex-vertical-centered wide">
+		<div class="total">Total: <span>{{ items.length }}</span></div>
+	    <table>
+	        <thead>
+	            <tr>
+	                <th v-for="column in columns" 
+	                    v-on:click="sortBy(column.prop)"
+	                    class="clickable"
+	                    v-bind:class="{sorted: sorted === column.prop}"
+	                >{{ column.label }}</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr v-for="item in items">
+	                <td v-for="column in columns">{{ resolve(item, column.prop) }}</td>
+	            </tr>
+	        </tbody>
+	    </table>
+		<div class="total">Total: <span>{{ items.length }}</span></div>
+    </div>
 </template>
 
 <script>
@@ -49,6 +53,12 @@
 </script>
 
 <style lang="scss" scoped>
+	.total {
+		font-weight: bolder;
+		> span {
+			font-weight: normal;
+		}
+	}
     .clickable {
         cursor: pointer;
 

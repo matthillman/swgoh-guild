@@ -11,6 +11,7 @@ Vue.prototype.$http = axios;
  */
 
 Vue.component('list', require('./components/List.vue'));
+Vue.component('stars', require('./components/Stars.vue'));
 Vue.component('characters', require('./components/Characters.vue'));
 
 var app = new Vue({
