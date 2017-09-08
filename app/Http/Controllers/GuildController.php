@@ -14,7 +14,7 @@ class GuildController extends Controller
      */
     public function index()
     {
-        //
+        return view('guild.list', ['guilds' => Guild::orderBy('name', 'asc')->get()]);
     }
 
     /**
