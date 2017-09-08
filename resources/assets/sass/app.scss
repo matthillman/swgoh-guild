@@ -483,6 +483,8 @@ h3.list-heading {
 	border: 1px solid $accentColor1;
 	border-radius: 2px;
 	margin-left: 5px;
+	width: unset;
+	text-transform: capitalize;
 
 	> * {
 		cursor: pointer;
