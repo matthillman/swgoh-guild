@@ -13,13 +13,13 @@
 			@foreach ($guilds as $guild)
 				<li class="mdl-list__item">
 					<span class="mdl-list__item-primary-content">
-						<button class="mdl-button mdl-js-button" e-go="{{ route('guilds.show', ['guild' => $guild->id]) }}">
+						<button class="mdl-button mdl-js-button" e-go="{{ route('guild.show', ['guild' => $guild->id]) }}">
 							<i class="material-icons  mdl-list__item-avatar accent4 fixme">group</i>
 							<span>{{ $guild->name }}</span>
 						</button>
 					</span>
 					<span class="mdl-list__item-secondary-content horizontal">
-						<form action="{{ route('guilds.destroy', ['guild' => $guild->id]) }}" method="POST">
+						<form action="{{ route('guild.destroy', ['guild' => $guild->id]) }}" method="POST">
 							{{ csrf_field() }}
 							{{ method_field('DELETE') }}
 							<button type="submit" class="mdl-button mdl-js-button mdl-button--icon error" id="delete-{{ $guild->id }}">
@@ -38,7 +38,7 @@
 @endif
 
 <!-- New Guild Form -->
-<form action="{{ url('guilds') }}" method="POST" class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+<form action="{{ url('guild') }}" method="POST" class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
     {{ csrf_field() }}
     <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Add a Guild</h2>
