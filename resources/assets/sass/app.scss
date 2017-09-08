@@ -480,7 +480,7 @@ h3.list-heading {
 }
 
 .segmented-control {
-	border: 1px solid $lightGrey;
+	border: 1px solid $accentColor1;
 	border-radius: 2px;
 	margin-left: 5px;
 
@@ -489,7 +489,7 @@ h3.list-heading {
 		padding: 2px 4px;
 		display: inline-block;
 		text-align: center;
-		border-right: 1px solid $lightGrey;
+		border-right: 1px solid $accentColor1;
 		outline: none;
 
 		&:last-child {
@@ -497,7 +497,7 @@ h3.list-heading {
 		}
 
 		&.selected {
-			background: $lightGrey;
+			background: $accentColor1;
 		}
 	}
 }
