@@ -54,7 +54,7 @@ class GuildController extends Controller
     }
 	
     public function characters($id) {
-        return response()->json(Guild::find($id)->characters->toArray());
+        return response()->json(Guild::find($id)->characters->with('member')->toArray());
     }
 
     /**
