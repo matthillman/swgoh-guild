@@ -1,13 +1,8 @@
 <template>
 	<div class="flex-vertical-centered wide">
-		<h3 class="subhead">Filter characters</h3>
-		<div class="filters">
-			<input v-model="characterFilter" placeholder="Character name">
-			<stars v-on:changed="filterStars"></stars>
-		</div>
 	    <list 
 	    	:columns="columns"
-	    	:items="filtered"
+	    	:items="items"
 	    	v-on:sort="sort"
 	    ></list>
     </div>
@@ -24,26 +19,15 @@
         },
         data: function () {
             return {
-                route: 'characters',
+                route: 'members',
                 items: [],
                 columns: [
-		            { prop: 'name', label: 'Character' },
-		            { prop: 'member.name', label: 'Member' },
-		            { prop: 'rarity', label: 'Rarity' },
-		            { prop: 'level', label: 'Level' },
-		            { prop: 'gear_level', label: 'Gear' },
+		            { prop: 'name', label: 'Member' },
+		            { prop: 'power', label: 'Galactic Power' },
+		            { prop: 'character_power', label: 'Character Power' },
+		            { prop: 'ship_power', label: 'Ship Power' },
 		        ],
-		        characterFilter: "",
-		        minStars: 0,
             }
-        },
-        computed: {
-        	filtered: function() {
-        		return this.items.filter(item => {
-        			return item.name.toLocaleLowerCase().indexOf(this.characterFilter.toLocaleLowerCase()) >= 0
-        				&& item.rarity >= this.minStars;
-        		});
-        	}
         },
         methods: {
             resolve: function(item, prop) {
@@ -69,9 +53,6 @@
 					this.items = this.items.reverse();
 				}
             },
-            filterStars: function(stars) {
-            	this.minStars = stars;
-            }
         }
     }
 </script>

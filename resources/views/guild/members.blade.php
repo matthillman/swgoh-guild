@@ -14,9 +14,8 @@
                 :class="{selected: selected === state}"
             >@{{state}}</span>
         </div>
-		<characters
-			route="characters"
-		></characters>
+		<characters v-if="selected == 'characters'"></characters>
+		<members v-if="members == 'members'"></members>
 	</div>
 </div>
 @endsection
