@@ -27,6 +27,7 @@
 		            { prop: 'character_power', label: 'Character Power' },
 		            { prop: 'ship_power', label: 'Ship Power' },
 		            { prop: 'seven_star', label: '7⭐️' },
+		            { prop: 'gear_twelve', label: 'G12' },
 		            { prop: 'gear_eleven', label: 'G11' },
 		        ],
             }
