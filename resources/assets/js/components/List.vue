@@ -23,19 +23,11 @@
             items: Array,
             columns: Array,
         },
-        mounted() {
-        	console.warn('list mounted', this.items);
-        },
         data: function () {
             return {
 				sorted: this.columns[0].prop,
 				reversed: false
             }
-        },
-        watch: {
-        	items: function() {
-        		console.warn('items changed', this.items);
-        	}
         },
         methods: {
             resolve: function(item, prop) {

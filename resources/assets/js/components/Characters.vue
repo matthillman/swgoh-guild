@@ -14,7 +14,6 @@
         mounted() {
             this.$http.get(this.route)
                 .then(res => {
-	                	console.warn("got result", this, this.items);
                     this.items = res.data;
                     this.sort(this.columns[0].prop, false);
 				});
