@@ -9,7 +9,7 @@
 
     <div class="mdl-card__supporting-text flex-vertical-centered wide" id="app">
         <div class="segmented-control">
-            <span v:for="state in states"
+            <span v-for="state in states"
                 v-on:click="show(state)" 
                 :class="{selected: selected === state}"
             >@{{state}}</span>
