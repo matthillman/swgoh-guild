@@ -15,7 +15,7 @@
             >@{{state}}</span>
         </div>
 		<characters v-if="selected == 'characters'"></characters>
-		<members v-if="members == 'members'"></members>
+		<members v-if="selected == 'members'"></members>
 	</div>
 </div>
 @endsection
