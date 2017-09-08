@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-
     protected $appends = ['gear_eleven', 'seven_star'];
     
     function characters() { 

@@ -28,7 +28,7 @@
                 items: [],
                 columns: [
 		            { prop: 'name', label: 'Character' },
-		            { prop: 'member.name', label: 'Member' },
+		            { prop: 'member_name', label: 'Member' },
 		            { prop: 'rarity', label: 'Rarity' },
 		            { prop: 'level', label: 'Level' },
 		            { prop: 'gear_level', label: 'Gear' },
