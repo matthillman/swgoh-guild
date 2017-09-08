@@ -13,7 +13,7 @@
 			@foreach ($guilds as $guild)
 				<li class="mdl-list__item">
 					<span class="mdl-list__item-primary-content">
-						<button class="mdl-button mdl-js-button" e-go="{{ route('guild.show', ['guild' => $guild->id]) }}">
+						<button class="mdl-button mdl-js-button" e-go="{{ route('guild.show', ['guild' => $guild->id]) . '/' }}">
 							<i class="material-icons  mdl-list__item-avatar accent4 fixme">group</i>
 							<span>{{ $guild->name }}</span>
 						</button>
