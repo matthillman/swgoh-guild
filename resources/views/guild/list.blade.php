@@ -52,6 +52,7 @@
             <!-- Guild Name -->
 
             @include('common.textinput', ['name' => 'name'])
+            @include('common.textinput', ['display_name' => 'Swgoh URL', 'name' => 'url'])
             @include('common.textinput', ['display_name' => 'Webhook URL', 'name' => 'webhook'])
 
 

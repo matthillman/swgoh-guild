@@ -1,5 +1,6 @@
 
 const axios = require('axios');
+const $ = require('jquery');
 window.Vue = require('vue');
 
 Vue.prototype.$http = axios;
@@ -28,3 +29,9 @@ var app = new Vue({
         }
     }
 });
+
+$(document).ready(function() {
+    $('[e-go]').on('click.go', function() {
+        window.location.assign($(this).attr('e-go'));
+    });
+})
