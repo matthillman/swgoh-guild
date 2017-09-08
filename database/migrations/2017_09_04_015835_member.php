@@ -18,9 +18,9 @@ class Member extends Migration
             $table->unsignedInteger('guild_id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('power');
-            $table->string('character_power');
-            $table->string('ship_power');
+            $table->unsignedInteger('power');
+            $table->unsignedInteger('character_power');
+            $table->unsignedInteger('ship_power');
             $table->timestamps();
 
             $table->foreign('guild_id')
