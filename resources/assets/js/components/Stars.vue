@@ -35,8 +35,10 @@ export default {
 		display: inline-block;
 		position: relative;
 		width: 1.1em;
+		cursor: pointer;
 		
-		&:hover, &:hover ~ span, &.selected {
+		/*&:hover, &:hover ~ span, */
+		&.selected {
 			color: transparent;
 			
 			&::before {
