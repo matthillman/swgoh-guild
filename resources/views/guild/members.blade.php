@@ -12,7 +12,7 @@
             <span v:for="state in states"
                 v-on:click="show(state)" 
                 :class="{selected: selected === state}"
-            >{{state}}</span>
+            >@{{state}}</span>
         </div>
 		<characters
 			route="characters"
