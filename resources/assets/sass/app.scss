@@ -478,3 +478,26 @@ h3.list-heading {
 	margin: 0;
 	padding: 0;
 }
+
+.segmented-control {
+	border: 1px solid $lightGrey;
+	border-radius: 2px;
+	margin-left: 5px;
+
+	> * {
+		cursor: pointer;
+		padding: 2px 4px;
+		display: inline-block;
+		text-align: center;
+		border-right: 1px solid $lightGrey;
+		outline: none;
+
+		&:last-child {
+			border-right: none;
+		}
+
+		&.selected {
+			background: $lightGrey;
+		}
+	}
+}

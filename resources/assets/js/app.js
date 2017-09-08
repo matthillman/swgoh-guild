@@ -17,12 +17,13 @@ Vue.component('characters', require('./components/Characters.vue'));
 var app = new Vue({
     el: '#app',
     data: {
-        memberColumns: [
-            { prop: 'name', label: 'Character' },
-            { prop: 'member.name', label: 'Member' },
-            { prop: 'rarity', label: 'Rarity' },
-            { prop: 'level', label: 'Level' },
-            { prop: 'gear_level', label: 'Gear' },
-        ]
+        states: ['characters', 'members'],
+        selected: 'characters',
+    },
+    methods: {
+        show: function(state) {
+            if (this.selected === state) { return; }
+            this.selected = state;
+        }
     }
 });
