@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        MicheleCurletta\LaravelScheduleOverview\ScheduleOverviewServiceProvider::class,
 
         /*
          * Application Service Providers...
