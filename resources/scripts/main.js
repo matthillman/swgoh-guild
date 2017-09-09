@@ -86,6 +86,7 @@ function parseMembers(links) {
     return new Promise((resolve, reject) => {
         let members = [];
         links.forEach((href) => {
+        	if (href == '/u/pi55%20off/') { return; }
             getMember(href).then(memberMain => {
                 let $user = $(memberMain).find('.panel-profile').last();
                 let name = $user.find('.panel-title .char-name').first().text();

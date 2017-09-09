@@ -19,6 +19,7 @@
 						</button>
 					</span>
 					<span class="mdl-list__item-secondary-content horizontal">
+						<a href="{{$guild->url}}" target="_blank">GG</a>
 						<form action="{{ route('guild.destroy', ['guild' => $guild->id]) }}" method="POST">
 							{{ csrf_field() }}
 							{{ method_field('DELETE') }}
