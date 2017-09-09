@@ -73,7 +73,7 @@ function getGuild(url) {
                                 })
                             });
                             processed += 1;
-                            if (processed == members.list.length) {
+                            if (processed == list.length) {
                                 pool.query('delete from members where guild_id = $1 and slug not in ($2)', [guildID, memberLinks.toArray()])
                                     .then(res => console.info(res))
                                     .catch(err => console.error('Error deleting members', e.stack));
