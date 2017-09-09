@@ -59,6 +59,7 @@ function getGuild(url) {
         let memberIDList = [];
         parseMembers(memberLinks.toArray())
             .then(list => {
+                let processed = 0
                 list.forEach(member => {
                     pool.query(upsertUserQ, [member.name, guildID, member.slug, member.power, member.characterPower, member.shipPower])
                         .then(res => {
@@ -71,14 +72,20 @@ function getGuild(url) {
                                     memberIDList.push(memberID);
                                 })
                             });
+                            processed += 1;
+                            if (processed == members.list.length) {
+                                pool.query('delete from members where guild_id = $1 and slug not in ($2)', [guildID, memberLinks.toArray()])
+                                    .then(res => console.info(res))
+                                    .catch(err => console.error('Error deleting members', e.stack));
+                            }
                         })
-                        .catch(err => console.error('Error processing member ' + member.slug, err));
-                });
-            })
-            .catch(error => console.error(error));
-        pool.query('delete from members where guild_id = $1 and slug not in ($2)', [guildID, memberLinks.toArray()])
-            .then(res => console.info(res))
-            .catch(err => console.error('Error deleting members', e.stack));
+                        .catch(err => {
+                            console.error('Error processing member ' + member.slug, err)
+                            processed += 1;
+                        });
+                    });
+                })
+                .catch(error => console.error(error));
 	});
 }
 
