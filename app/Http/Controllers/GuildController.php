@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Guild;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
 
 class GuildController extends Controller
 {
@@ -35,7 +36,18 @@ class GuildController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'url' => 'required',
+        ]);
+		
+		$guild = new Guild;
+		$guild->name = $request->name;
+		$guild->url = $request->url;
+		$guild->webhook = $request->webhook;
+		$guild->save();
+
+        return redirect('/guild');
     }
 
     /**
@@ -55,6 +67,28 @@ class GuildController extends Controller
 	
     public function characters($id) {
         return response()->json(Guild::find($id)->characters()->with('member')->get()->toArray());
+    }
+    
+    public function scrapeGuild(Request $request) {
+    	
+        $proc = new Process('node resources/scripts/guild.js ' . $this->argument('guild'));
+        $name;
+        $image;
+        $status = $proc->run(
+			function ($type, $data) use (&$name, &$image) {
+				if ($type == Process::OUT) {
+					list($name, $image) = explode(':|:', $data);
+				} else {
+					$this->error($data);
+				}
+			}
+        );
+        
+		if ($status) {
+			return response("Failed to scrape guild.", 400);
+        }
+        
+        return response()->json(['name' => $name, 'image' => $image]);
     }
 
     /**
@@ -88,6 +122,8 @@ class GuildController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Guild::find($id)->delete();
+        
+        return redirect('/guild');
     }
 }
